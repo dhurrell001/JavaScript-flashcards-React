@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import React from "react";
+import JsCard from "./components/jsCard";
+import Header from "./components/header";
+import cardData from "./data/cardData";
+import ScoreBoard from "./components/scoreBoard";
+import AboutText from "./components/aboutText";
+import UsefulLinks from "./components/usefulLinks";
 function App() {
+  const [cards, setCards] = React.useState(cardData);
+  const [currentCardIndex, setCurrentCardIndex] = React.useState(0);
+  const currentCard = cards[currentCardIndex];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <Header />
+
+      <JsCard
+        question={currentCard.question}
+        content={currentCard.answer}
+        setCurrentCardIndex={setCurrentCardIndex}
+        currentCardIndex={currentCardIndex}
+      />
+      <div className="container">
+        <AboutText />
+        <UsefulLinks />
+      </div>
     </div>
   );
 }
