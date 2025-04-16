@@ -1,0 +1,11 @@
+.useful-links-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  width: 20%;
+  height: 100%;
+  padding: 2%;
+  border: 1px solid gold;
+  gap: 3%;
+}
