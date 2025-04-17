@@ -1,0 +1,22 @@
+.difficulty-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid gold;
+}
+
+.difficulty-button {
+  background-color: gold;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  /* padding: 10px ; */
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  justify-content: center;
+  align-items: center;
+}
