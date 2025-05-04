@@ -9,3 +9,10 @@
   border: 1px solid gold;
   gap: 3%;
 }
+
+.useful-links-container h2 {
+  font-size: 24px;
+  margin: 0;
+  padding: 10px;
+  color: darkgray;
+}
