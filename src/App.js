@@ -57,6 +57,10 @@ function App() {
       ) : (
         <>
           <div className="top-container">
+            <DifficultyLevel
+              setDifficultyLevel={setDifficultyLevel}
+              difficultyLevel={difficultyLevel}
+            />
             <JsQuestionCard
               question={currentCard.question}
               answerOne={"What is my name"}
