@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./jsCard.module.css";
 
-function JsCard({ question, content, setCurrentCardIndex, currentCardIndex }) {
+function JsCard({
+  question,
+  content,
+  setCurrentCardIndex,
+  currentCardIndex,
+  cards,
+}) {
   const [isClicked, setIsClicked] = React.useState(false);
 
   function handleBackClick() {
@@ -10,7 +16,7 @@ function JsCard({ question, content, setCurrentCardIndex, currentCardIndex }) {
     }
   }
   function handleNextClick() {
-    if (!isClicked) {
+    if (currentCardIndex < cards.length - 1 && !isClicked) {
       setCurrentCardIndex((prevState) => prevState + 1);
     }
   }

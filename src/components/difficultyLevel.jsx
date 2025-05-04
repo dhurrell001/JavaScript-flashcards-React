@@ -2,7 +2,7 @@ import React from "react";
 
 import styles from "./difficultyLevel.module.css";
 
-function DifficultyLevel({ setDifficultyLevel }) {
+function DifficultyLevel({ setDifficultyLevel, difficultyLevel }) {
   function handleDifficultyChange(level) {
     if (level === "easy") {
       setDifficultyLevel("easy");
@@ -16,21 +16,27 @@ function DifficultyLevel({ setDifficultyLevel }) {
   }
   return (
     <div className={styles["difficulty-container"]}>
-      <h2>Difficulty Level</h2>
+      <h2>Difficulty</h2>
       <button
-        className={styles["difficulty-button"]}
+        className={`${styles["difficulty-button"]} ${
+          difficultyLevel === "easy" ? styles["button-selected"] : ""
+        }`}
         onClick={() => handleDifficultyChange("easy")}
       >
         Easy
       </button>
       <button
-        className={styles["difficulty-button"]}
+        className={`${styles["difficulty-button"]} ${
+          difficultyLevel === "medium" ? styles["button-selected"] : ""
+        }`}
         onClick={() => handleDifficultyChange("medium")}
       >
         Medium
       </button>
       <button
-        className={styles["difficulty-button"]}
+        className={`${styles["difficulty-button"]} ${
+          difficultyLevel === "hard" ? styles["button-selected"] : ""
+        }`}
         onClick={() => handleDifficultyChange("hard")}
       >
         Hard

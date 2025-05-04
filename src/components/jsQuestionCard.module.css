@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   /* min-width: 50%;
-  max-width: 60%; */
+    max-width: 60%; */
   width: 55%;
   min-height: 250px;
   background-color: white;
@@ -37,6 +37,22 @@
   width: 90%;
   /* height: 100%; */
   padding: 10px;
+}
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: justify;
+  /* background-color: yellow; */
+  width: 100%;
+}
+.radio-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  border: 1px solid black;
+  text-align: left;
 }
 button {
   background-color: gold;
