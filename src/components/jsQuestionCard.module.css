@@ -24,7 +24,7 @@
   align-items: center;
   width: 100%;
 
-  padding: 0 20px;
+  /* padding: 0 20px; */
 }
 .question-container {
   display: flex;
@@ -34,18 +34,21 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 90%;
+  width: 100%;
   /* height: 100%; */
   padding: 10px;
 }
 .answer-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   text-align: justify;
   /* background-color: yellow; */
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  /* padding-left: 25%; */
 }
 .radio-container {
   display: flex;
