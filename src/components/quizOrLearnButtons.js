@@ -12,10 +12,16 @@ function QuizOrLearnButtons({ setIsLearn, setIsQuiz }) {
   }
   return (
     <div className={styles["button-container"]}>
-      <button className={styles["button"]} onClick={handleQuizClick}>
+      <button
+        className={styles["button-quiz-choice"]}
+        onClick={handleQuizClick}
+      >
         Quiz
       </button>
-      <button className={styles["button"]} onClick={handleLearnClick}>
+      <button
+        className={styles["button-quiz-choice"]}
+        onClick={handleLearnClick}
+      >
         Learn
       </button>
     </div>

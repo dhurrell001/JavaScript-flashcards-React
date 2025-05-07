@@ -11,9 +11,15 @@ import UsefulLinks from "./components/usefulLinks";
 import DifficultyLevel from "./components/difficultyLevel";
 import JsQuestionCard from "./components/jsQuestionCard";
 import QuizOrLearnButtons from "./components/quizOrLearnButtons";
+import MultipleChoiceQuestions from "./data/multipleChoiceQuestions";
+import MultipleChoiceQuestionsIntermediate from "./data/multipleChoiceQuestionIntermediate";
+
 function App() {
   const [cards, setCards] = React.useState(cardData);
   const [currentCardIndex, setCurrentCardIndex] = React.useState(0);
+  const [questionCard, setQuestionCard] = React.useState(
+    MultipleChoiceQuestions
+  );
   const currentCard = cards[currentCardIndex];
   const [difficultyLevel, setDifficultyLevel] = React.useState("easy");
   const [isLearn, setIsLearn] = React.useState(true);
@@ -22,8 +28,10 @@ function App() {
   React.useEffect(() => {
     if (difficultyLevel === "easy") {
       setCards(cardData);
+      setQuestionCard(MultipleChoiceQuestions);
     } else if (difficultyLevel === "medium") {
       setCards(jsIntermediate);
+      setQuestionCard(MultipleChoiceQuestionsIntermediate);
     }
     if (difficultyLevel === "hard") {
       setCards(jsHard);
@@ -61,13 +69,7 @@ function App() {
               setDifficultyLevel={setDifficultyLevel}
               difficultyLevel={difficultyLevel}
             />
-            <JsQuestionCard
-              question={currentCard.question}
-              answerOne={"What is my name"}
-              answerTwo={"How old am I?"}
-              answerThree={"What color is the sea?"}
-              answerFour={"Is bergundy a red color"}
-            />
+            <JsQuestionCard questions={questionCard} />
           </div>
         </>
       )}
