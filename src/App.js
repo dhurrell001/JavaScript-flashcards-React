@@ -13,6 +13,7 @@ import JsQuestionCard from "./components/jsQuestionCard";
 import QuizOrLearnButtons from "./components/quizOrLearnButtons";
 import MultipleChoiceQuestions from "./data/multipleChoiceQuestions";
 import MultipleChoiceQuestionsIntermediate from "./data/multipleChoiceQuestionIntermediate";
+import QuizScoreCard from "./components/quizScoreCard";
 
 function App() {
   const [cards, setCards] = React.useState(cardData);
@@ -24,6 +25,8 @@ function App() {
   const [difficultyLevel, setDifficultyLevel] = React.useState("easy");
   const [isLearn, setIsLearn] = React.useState(true);
   const [isQuiz, setIsQuiz] = React.useState(false);
+  const [isQuizSubmitted, setIsQuizSubmitted] = React.useState(false);
+  const [quizResult, setQuizResult] = React.useState(0);
 
   React.useEffect(() => {
     if (difficultyLevel === "easy") {
@@ -62,6 +65,14 @@ function App() {
             {console.log(cards)}
           </div>
         </>
+      ) : isQuizSubmitted ? (
+        <div className="top-container">
+          <QuizScoreCard
+            score={quizResult}
+            totalQuestions={questionCard.length}
+            setIsQuizSubmitted={setIsQuizSubmitted}
+          />
+        </div>
       ) : (
         <>
           <div className="top-container">
@@ -69,7 +80,11 @@ function App() {
               setDifficultyLevel={setDifficultyLevel}
               difficultyLevel={difficultyLevel}
             />
-            <JsQuestionCard questions={questionCard} />
+            <JsQuestionCard
+              questions={questionCard}
+              setIsQuizSubmitted={setIsQuizSubmitted}
+              setQuizResult={setQuizResult}
+            />
           </div>
         </>
       )}
