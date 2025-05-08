@@ -1,102 +1,115 @@
-// Importing React and necessary hooks and styles
-import React from "react";
+/**
+ * JsQuestionCard component displays one multiple-choice JavaScript question at a time,
+ * allows users to navigate between questions, select answers, and submit the quiz.
+ *
+ * @component
+ * @param {Object} props - Props passed to this component.
+ * @param {Array<Object>} props.questions - List of questions, each with a text string and answer options.
+ * @param {Function} props.setIsQuizSubmitted - Function to set quiz as submitted (used by parent component).
+ * @param {Function} props.setQuizResult - Function to pass back the final score to the parent.
+ *
+ * @returns {JSX.Element} The rendered multiple-choice question card.
+ */
+
+import React, { useState } from "react";
 import styles from "./jsQuestionCard.module.css";
-import { useState } from "react";
-import MultipleChoiceQuestions from "../data/multipleChoiceQuestions";
 
-// This component is responsible for displaying a question card with multiple choice answers.
-// It allows users to select an answer and navigate through questions. Comments ahve been created using ChatGPT.
-
-function JsQuestionCard({ questions }) {
-  // State to hold all questions (loaded from external file)
-  // const [questions, setQuestion] = useState(MultipleChoiceQuestions);
-
-  // State to track which question card is currently shown
+function JsQuestionCard({ questions, setIsQuizSubmitted, setQuizResult }) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
-
-  // State to track which answer the user has selected
   const [selectedAnswer, setSelectedAnswer] = useState("");
-
   const [isClicked, setIsClicked] = useState(false);
+  const [score, setScore] = useState(1); // Starts at 1 to prevent 0-indexing issues
 
-  // Function to move to the previous question, if not at the beginning
+  /**
+   * Navigates back one question, unless already on the first.
+   */
   function handleBackClick() {
     if (currentCardIndex > 0 && !isClicked) {
       setCurrentCardIndex((prevState) => prevState - 1);
     }
   }
 
-  // Function to move to the next question
+  /**
+   * Moves to the next question, if available.
+   */
   function handleNextClick() {
     if (!isClicked && currentCardIndex < questions.length - 1) {
       setCurrentCardIndex((prevState) => prevState + 1);
     }
   }
 
-  // Function to check if selected answer is correct and show feedback
+  /**
+   * Evaluates the selected answer and updates the score if correct.
+   *
+   * @param {boolean} correctAnswer - Whether the selected answer is correct.
+   */
   function checkAnswer(correctAnswer) {
     if (correctAnswer) {
-      alert("Correct!");
+      setScore((prevScore) => prevScore + 1);
+      alert("Correct! Your score is: " + score);
     } else {
       alert("Incorrect, try again!");
     }
   }
 
   return (
-    // Main card container
     <div className={styles.card}>
-      {/* Display current question */}
+      {/* Display the current question */}
       <p>{questions[currentCardIndex].question}</p>
 
       <div className={styles["answer-container"]}>
-        {/* Map through answer property of question, to display answer choices for current question */}
-        {questions[currentCardIndex].answers.map((answer) => {
-          return (
-            <div key={answer.text}>
-              {/* 
-    This is a radio input for one of the multiple choice answers.
-
-    - type="radio": Makes this input a radio button.
-    - name="answer": Groups all radio buttons together so only one can be selected at a time.
-      (All inputs with the same 'name' behave like a group — selecting one will unselect the others.)
-    - value={answer.text}: The value associated with this radio button, based on the current answer option.
-    - checked={selectedAnswer === answer.text}: 
-        This checks if the current selectedAnswer matches this option's text.
-        If it does, the radio button appears selected.
-    - onChange={...}: 
-        When the user selects this radio button:
-        1. setSelectedAnswer(answer.text) saves the selected answer to state.
-        2. checkAnswer(answer.isCorrect) shows an alert saying whether it's correct.
-  */}
-              <label>
-                {/* Radio button for selecting an answer */}
-                <input
-                  type="radio"
-                  name="answer"
-                  value={answer.text}
-                  checked={selectedAnswer === answer.text}
-                  onChange={() => {
-                    setSelectedAnswer(answer.text);
-                    checkAnswer(answer.isCorrect); // Show result on selection
-                  }}
-                />
-                {answer.text}
-              </label>
-            </div>
-          );
-        })}
-
-        {/* Debug log for development purposes */}
-        {console.log("selected answer", selectedAnswer)}
+        {/* Render answer options for the current question */}
+        {questions[currentCardIndex].answers.map((answer) => (
+          <div key={answer.text}>
+            {/**
+             * This <input> is a radio button that allows the user to select an answer.
+             *
+             * Key Attributes:
+             * - type="radio": Makes it a radio button (single choice within a group).
+             * - name="answer": Groups all related options. All radio buttons with the same `name` belong to the same group — selecting one deselects the others.
+             * - value={answer.text}: The actual value of this radio button, representing one possible answer.
+             * - checked={selectedAnswer === answer.text}: Marks this radio button as selected if it matches the current selection.
+             * - onChange={...}: Called when the user clicks the radio button.
+             *     - Updates the selected answer in state.
+             *     - Calls checkAnswer() to give instant feedback.
+             */}
+            <label>
+              <input
+                type="radio"
+                name="answer"
+                value={answer.text}
+                checked={selectedAnswer === answer.text}
+                onChange={() => {
+                  setSelectedAnswer(answer.text);
+                  checkAnswer(answer.isCorrect);
+                }}
+              />
+              {answer.text}
+            </label>
+          </div>
+        ))}
       </div>
+
       {/* Navigation buttons */}
       <div className={styles["button-container"]}>
-        {/* Previous button, disabled on first question */}
+        {/* Go back button, disabled if already on the first question */}
         <button onClick={handleBackClick} disabled={currentCardIndex === 0}>
           Prev
         </button>
 
-        {/* Next button to go to the next question */}
+        {/* Only show submit button on the last question, and if an answer is selected */}
+        {currentCardIndex === questions.length - 1 && selectedAnswer && (
+          <button
+            onClick={() => {
+              setIsQuizSubmitted(true);
+              setQuizResult(score - 1); // Subtract 1 to offset initial score
+            }}
+          >
+            Submit
+          </button>
+        )}
+
+        {/* Go to the next question */}
         <button onClick={handleNextClick}>Next</button>
       </div>
     </div>
